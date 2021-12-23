@@ -33,10 +33,10 @@ mcp2515_can CAN(SPI_CS_PIN); // Set CS pin
 #endif
 
 void setup() {
-    SERIAL_PORT_MONITOR.begin(115200);
+    SERIAL_PORT_MONITOR.begin(1000000);
     while(!Serial){};
 
-    while (CAN_OK != CAN.begin(CAN_500KBPS, MCP_16MHz)) {             // init can bus : baudrate = 500k
+    while (CAN_OK != CAN.begin(CAN_500KBPS, MCP_8MHz)) {             // init can bus : baudrate = 500k
         SERIAL_PORT_MONITOR.println("CAN init fail, retry...");
         delay(100);
     }
@@ -58,6 +58,6 @@ void loop() {
     }
 
     CAN.sendMsgBuf(0x00, 0, 8, stmp);
-    delay(500);                       // send data per 100ms
+    //delay(500);                       // send data per 100ms
     SERIAL_PORT_MONITOR.println("CAN BUS sendMsgBuf ok!");
 }

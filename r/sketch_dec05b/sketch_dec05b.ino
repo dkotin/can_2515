@@ -37,13 +37,13 @@ mcp2515_can CAN(SPI_CS_PIN); // Set CS pin
 #endif                           
 
 void setup() {
-    SERIAL_PORT_MONITOR.begin(115200);
+    SERIAL_PORT_MONITOR.begin(2000000);
 
     #if defined (INTERUPT_ENABLED)
         attachInterrupt(digitalPinToInterrupt(CAN_INT_PIN), MCP2515_ISR, FALLING); // start interrupt
     #endif
     
-    while (CAN_OK != CAN.begin(CAN_500KBPS, MCP_16MHz)) {             // init can bus : baudrate = 500k
+    while (CAN_OK != CAN.begin(CAN_500KBPS, MCP_8MHz)) {             // init can bus : baudrate = 500k
         SERIAL_PORT_MONITOR.println("CAN init fail, retry...");
         delay(100);
     }
@@ -70,12 +70,11 @@ void loop() {
         CAN.readMsgBuf(&len, buf);    // read data,  len: data length, buf: data buf
 
         unsigned long canId = CAN.getCanId();
-
-        SERIAL_PORT_MONITOR.print(canId, HEX);
-        SERIAL_PORT_MONITOR.print("\t");
-        
+//        SERIAL_PORT_MONITOR.print(canId);
+//        SERIAL_PORT_MONITOR.print("\t");
+//        
         for (int i = 0; i < len; i++) { // print the data
-            SERIAL_PORT_MONITOR.print(buf[i], HEX);
+            SERIAL_PORT_MONITOR.print(buf[i]);
             SERIAL_PORT_MONITOR.print("\t");
         }
         SERIAL_PORT_MONITOR.println();

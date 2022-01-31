@@ -84,6 +84,7 @@ void loop() {
         can1Id = CAN1.getCanId();
         CAN2.sendMsgBuf(can1Id, 0, len1, buf1);
         //mon2(can1Id, "1->2 ", buf1, len1);
+        mon(can1Id, "1->2 ", buf1, len1);
     }
 
     if (CAN_MSGAVAIL == CAN2.checkReceive()) {         // check if data coming
@@ -91,6 +92,7 @@ void loop() {
         can2Id = CAN2.getCanId();
         CAN1.sendMsgBuf(can2Id, 0, len2, buf2);
         //mon2(can2Id, "2->1 ", buf2, len2);
+        mon(can2Id, "2->1 ", buf2, len2);
     }
     //unsigned char stmp[8] = {0, 1, 2, 3, 4, 5, 0, 0};
     //delay(500);       
